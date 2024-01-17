@@ -1,50 +1,64 @@
-import React from "react";
-import Profile from "../../Images/Profile.jpeg";
+import React, { useEffect, useState } from "react";
+import axios from "axios";
 
 function Pricing() {
+  const [userData, setUserData] = useState([]);
+
+  const pageData = () => {
+    axios
+      .get("http://localhost:5678/page-data")
+      .then((response) => {
+        if (response.status === 200) {
+          setUserData(response.data);
+        }
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  };
+
+  useEffect(() => {
+    pageData();
+  }, []);
   return (
-    <div class="container col-xl-10 col-xxl-8 px-4 py-5">
-      <div class="row align-items-center g-lg-5 py-5">
-        <div class="col-lg-7 text-center text-lg-start">
-          <h1 class="display-4 fw-bold lh-1 text-body-emphasis mb-3">
-            Vertically centered hero sign-up form
+    <div className="container col-xl-10 col-xxl-8 px-4 py-5">
+      <div className="row align-items-center g-lg-5 py-5">
+        <div className="col-lg-7 text-center text-lg-start">
+          <h1 className="display-4 fw-bold lh-1 text-body-emphasis mb-3">
+            {userData[2]?.title}
           </h1>
-          <p class="col-lg-10 fs-4">
-            Below is an example form built entirely with Bootstrap’s form
-            controls. Each required form group has a validation state that can
-            be triggered by attempting to submit the form without completing it.
-          </p>
+          <p className="col-lg-10 fs-4">{userData[2]?.para}</p>
         </div>
-        <div class="col-md-10 mx-auto col-lg-5">
-          <form class="p-4 p-md-5 border rounded-3 bg-body-tertiary">
-            <div class="form-floating mb-3">
+        <div className="col-md-10 mx-auto col-lg-5">
+          <form className="p-4 p-md-5 border rounded-3 bg-body-tertiary">
+            <div className="form-floating mb-3">
               <input
                 type="email"
-                class="form-control"
+                className="form-control"
                 id="floatingInput"
                 placeholder="name@example.com"
               />
               <label for="floatingInput">Email address</label>
             </div>
-            <div class="form-floating mb-3">
+            <div className="form-floating mb-3">
               <input
                 type="password"
-                class="form-control"
+                className="form-control"
                 id="floatingPassword"
                 placeholder="Password"
               />
               <label for="floatingPassword">Password</label>
             </div>
-            <div class="checkbox mb-3">
+            <div className="checkbox mb-3">
               <label>
                 <input type="checkbox" value="remember-me" /> Remember me
               </label>
             </div>
-            <button class="w-100 btn btn-lg btn-primary" type="submit">
+            <button className="w-100 btn btn-lg btn-primary" type="submit">
               Sign up
             </button>
-            <hr class="my-4" />
-            <small class="text-body-secondary">
+            <hr className="my-4" />
+            <small className="text-body-secondary">
               By clicking Sign up, you agree to the terms of use.
             </small>
           </form>
